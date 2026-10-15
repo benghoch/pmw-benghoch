@@ -170,9 +170,9 @@ Signed-in Settings > Advanced Security was reloaded after the visibility change.
 
 ## Lab 1 agent profile setup
 
-Branch: lab1/agents-governance. Base policy SHA: 8b6c95e2e20123bc8e3b7f793bde0f2ca909dbb8. Five uncommitted .github/agents/*.agent.md copies match agent_templates, ignoring line endings and trailing whitespace; original templates and policy were not changed.
+Branch: lab1/agents-governance. Base policy SHA: 8b6c95e2e20123bc8e3b7f793bde0f2ca909dbb8. Five .github/agents/*.agent.md profiles were copied from agent_templates, then committed and pushed in PR #2; original templates and policy were not changed.
 
-All five profiles now have `model: Auto`, matching the user's reported picker choice; `user-invocable: true`; and `disable-model-invocation: true`. Auto selects dynamically, so each profile does not have one fixed USD input/output price. The actual selected model determines the applicable price per million tokens and may vary between sessions. No rate is represented as zero or free.
+All five profiles have `model: Auto`, matching the user's reported picker choice, and `user-invocable: true`. `pm-planner` and `pm-reviewer` set `disable-model-invocation: false` for coordinator delegation; implementer, tool-engineer and coordinator set it to true. Auto selects dynamically, so each profile does not have one fixed USD input/output price. The actual selected model determines the applicable price per million tokens and may vary between sessions. No rate is represented as zero or free.
 
 | name | description | tools | model and AI Credits price / 1M input/output tokens | user-invocable | disable-model-invocation | agents | Policy comparison |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -182,7 +182,7 @@ All five profiles now have `model: Auto`, matching the user's reported picker ch
 | pm-reviewer | Review the current integrated candidate without edits | read, search | Auto; variable, determined by routed model | true | false | Not declared | Exact allowed tool list. |
 | pm-coordinator | Coordinate bounded planning and review with observed worker calls | read, search, agent | Auto; variable, determined by routed model | true | true | pm-planner, pm-reviewer | Exact allowed tool and worker lists. |
 
-`user-invocable: true` exposes manual selection; `disable-model-invocation: true` prevents other agents from invoking the profile automatically. The coordinator needs `pm-planner` and `pm-reviewer` to permit model invocation, while remaining restricted to those two names in its `agents` list. Runtime delegation remains unverified because this session cannot select agents in the Chat UI.
+`user-invocable: true` exposes manual selection; `disable-model-invocation: true` prevents other agents from invoking the profile automatically. The coordinator's `agents` list remains restricted to `pm-planner` and `pm-reviewer`; only those two profiles permit model invocation. Runtime delegation remains unverified because this session cannot select agents in the Chat UI.
 
 Pricing source: [Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing#pricing-tables), linked by GitHub's [supported models reference](https://docs.github.com/en/copilot/reference/ai-models/supported-models). The pricing page says all prices are per 1 million tokens and that cost depends on the model and token usage; Auto has no separate fixed rate. Cached-input and, for some models, cache-write rates may also apply. To produce a fixed per-model rate record, select and pin concrete model names instead of Auto. The requested picker availability for specific model names was not otherwise inspected.
 

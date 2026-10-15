@@ -31,7 +31,7 @@ Read-only references: `prompts/01-plan.md`, `docs/plan-template.md`, `docs/contr
 3. In VS Code, select each workspace agent and verify it loads. For planner and reviewer, record the runtime-visible tools rather than assuming frontmatter equals runtime availability. Reload the window only if a profile is missing, after confirming the project root is open.
 4. Confirm whether `model: Auto` is supported for workspace custom-agent pinning. If not, ask the human to select an exact concrete picker model before changing the field; record applicable per-million-token prices from GitHub's official model pricing table.
 5. Run the guard self-tests and a profile check against the base-branch policy. Do not edit the existing guard tests to obtain a pass.
-6. Before any PR is opened, the human completes actual Build, Evidence, and Review passes and checks their role boxes in the PR description. Record actual usage only; do not invent token or credit totals.
+6. Before opening the PR, complete Build and Evidence passes and record actual usage; after opening, complete the fresh-chat Review pass, review the browser diff, and resolve every comment. Record actual usage only; do not invent token or credit totals.
 
 ## API and UI acceptance
 
@@ -50,7 +50,7 @@ None planned. Existing `ci/guard.test.mjs` covers profile parsing, missing model
 
 ## Agent and model per step, expected prompts
 
-Planning: `pm-planner` profile requested; actual Chat picker selection was unavailable in this session, so this response is a manual plan using the profile instructions. User reports `Auto`; effective runtime model and AI-credit usage are not observed. Profile implementation/selection and Build pass remain human-owned. No other agent invocation or MCP tool call is claimed.
+Planning: `pm-planner` profile requested; actual Chat picker selection was unavailable in this session, so the plan was prepared manually using the profile instructions. User reports `Auto`; effective runtime model and AI-credit usage are not observed. Profile implementation was performed manually in the repository; no other agent invocation or MCP tool call is claimed.
 
 ## Rollback and preserved evidence
 
