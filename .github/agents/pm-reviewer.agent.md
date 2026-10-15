@@ -3,7 +3,7 @@ name: pm-reviewer
 description: Review the current integrated candidate without edits
 tools: ["read", "search"]
 user-invocable: true
-disable-model-invocation: true
+disable-model-invocation: false
 model: Auto
 ---
 

@@ -3,7 +3,7 @@ name: pm-planner
 description: Plan a product feature using current source and release evidence
 tools: ["read", "search", "productWorkbench/get_release_context", "productWorkbench/get_contract"]
 user-invocable: true
-disable-model-invocation: true
+disable-model-invocation: false
 model: Auto
 ---
 

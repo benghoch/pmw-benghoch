@@ -176,13 +176,13 @@ All five profiles now have `model: Auto`, matching the user's reported picker ch
 
 | name | description | tools | model and AI Credits price / 1M input/output tokens | user-invocable | disable-model-invocation | agents | Policy comparison |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| pm-planner | Plan a product feature using current source and release evidence | read, search, productWorkbench/get_release_context, productWorkbench/get_contract | Auto; variable, determined by routed model | true | true | Not declared | Allowed; both MCP tools match productWorkbench/*. |
+| pm-planner | Plan a product feature using current source and release evidence | read, search, productWorkbench/get_release_context, productWorkbench/get_contract | Auto; variable, determined by routed model | true | false | Not declared | Allowed; both MCP tools match productWorkbench/*. |
 | pm-implementer | Implement an approved bounded Web UI and API change | read, search, edit, execute | Auto; variable, determined by routed model | true | true | Not declared | Exact allowed tool list. |
 | pm-tool-engineer | Develop bounded MCP tools against the workshop contract | read, search, edit, execute | Auto; variable, determined by routed model | true | true | Not declared | Exact allowed tool list. |
-| pm-reviewer | Review the current integrated candidate without edits | read, search | Auto; variable, determined by routed model | true | true | Not declared | Exact allowed tool list. |
+| pm-reviewer | Review the current integrated candidate without edits | read, search | Auto; variable, determined by routed model | true | false | Not declared | Exact allowed tool list. |
 | pm-coordinator | Coordinate bounded planning and review with observed worker calls | read, search, agent | Auto; variable, determined by routed model | true | true | pm-planner, pm-reviewer | Exact allowed tool and worker lists. |
 
-`user-invocable: true` exposes manual selection; `disable-model-invocation: true` prevents other agents from invoking the profile automatically. The supplied worker flags therefore constrain coordinator delegation despite its allowed workers; the template's manual specialist fallback remains relevant. These flags were preserved, not silently relaxed.
+`user-invocable: true` exposes manual selection; `disable-model-invocation: true` prevents other agents from invoking the profile automatically. The coordinator needs `pm-planner` and `pm-reviewer` to permit model invocation, while remaining restricted to those two names in its `agents` list. Runtime delegation remains unverified because this session cannot select agents in the Chat UI.
 
 Pricing source: [Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing#pricing-tables), linked by GitHub's [supported models reference](https://docs.github.com/en/copilot/reference/ai-models/supported-models). The pricing page says all prices are per 1 million tokens and that cost depends on the model and token usage; Auto has no separate fixed rate. Cached-input and, for some models, cache-write rates may also apply. To produce a fixed per-model rate record, select and pin concrete model names instead of Auto. The requested picker availability for specific model names was not otherwise inspected.
 

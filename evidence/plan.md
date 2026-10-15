@@ -26,7 +26,7 @@ Read-only references: `prompts/01-plan.md`, `docs/plan-template.md`, `docs/contr
 
 ## Implementation sequence
 
-1. Confirm the profile names, descriptions, tools, `model`, `user-invocable`, `disable-model-invocation`, and coordinator `agents` against each supplied template.
+1. Confirm profile names, descriptions, tools, `model`, `user-invocable`, and coordinator `agents` against each supplied template; allow only the coordinator's listed worker profiles to be model-invocable so its documented delegation can work.
 2. Keep every profile tool within its `governance/agent-policy.json` role allowlist; keep coordinator workers to `pm-planner` and `pm-reviewer`.
 3. In VS Code, select each workspace agent and verify it loads. For planner and reviewer, record the runtime-visible tools rather than assuming frontmatter equals runtime availability. Reload the window only if a profile is missing, after confirming the project root is open.
 4. Confirm whether `model: Auto` is supported for workspace custom-agent pinning. If not, ask the human to select an exact concrete picker model before changing the field; record applicable per-million-token prices from GitHub's official model pricing table.
@@ -35,7 +35,7 @@ Read-only references: `prompts/01-plan.md`, `docs/plan-template.md`, `docs/contr
 
 ## API and UI acceptance
 
-No application API or product UI changes are planned. VS Code acceptance: all five profiles appear and load; planner exposes only its allowed read/search/MCP tools; reviewer exposes only read/search tools; coordinator behavior matches its declared worker policy. The current profiles set `disable-model-invocation: true` for every role, including planner and reviewer, while the coordinator body asks to invoke them; resolve this configuration/behavior conflict with the human before claiming delegation works. No release operation is in scope.
+No application API or product UI changes are planned. VS Code acceptance: all five profiles appear and load; planner exposes only its allowed read/search/MCP tools; reviewer exposes only read/search tools; coordinator behavior matches its declared worker policy. `pm-planner` and `pm-reviewer` set `disable-model-invocation: false` so the coordinator can invoke its explicitly allowed workers; other profiles remain disabled for model invocation. Runtime delegation still needs verification in VS Code. No release operation is in scope.
 
 ## Checks and failure scenarios
 
@@ -60,7 +60,7 @@ No data or product state is changed. Revert only this branch's profile and evide
 
 - Confirm the facilitator's actual work item if it is not the Lab 1 profile-governance increment assumed here.
 - Confirm `model: Auto` is valid for workspace custom-agent model pinning; Auto has no single fixed per-million-token price because routing determines the billed model.
-- Decide whether planner/reviewer should remain non-invocable by other agents despite the coordinator's delegation instructions, or whether a separately reviewed configuration change is desired.
+- Verify that planner/reviewer delegation works in the VS Code runtime and remains limited to the coordinator's explicit `agents` list.
 - Provide actual Copilot usage/model-picker observations from the user's VS Code session; this environment cannot read them.
 
 ## Human approval name and time
